@@ -1,0 +1,3 @@
+/Users/nilslyrevik/Desktop/Code/GitHubRepos/optimage/build/CMakeFiles/optimage.dir
+/Users/nilslyrevik/Desktop/Code/GitHubRepos/optimage/build/CMakeFiles/edit_cache.dir
+/Users/nilslyrevik/Desktop/Code/GitHubRepos/optimage/build/CMakeFiles/rebuild_cache.dir
