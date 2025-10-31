@@ -9,6 +9,7 @@ set(CMAKE_DEPENDS_LANGUAGES
 # The set of dependency files which are needed:
 set(CMAKE_DEPENDS_DEPENDENCY_FILES
   "/Users/nilslyrevik/Desktop/Code/GitHubRepos/optimage/main.cpp" "CMakeFiles/optimage.dir/main.cpp.o" "gcc" "CMakeFiles/optimage.dir/main.cpp.o.d"
+  "/Users/nilslyrevik/Desktop/Code/GitHubRepos/optimage/src/load_save_image.cpp" "CMakeFiles/optimage.dir/src/load_save_image.cpp.o" "gcc" "CMakeFiles/optimage.dir/src/load_save_image.cpp.o.d"
   )
 
 # Targets to which this target links which contain Fortran sources.

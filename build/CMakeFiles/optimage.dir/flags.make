@@ -4,7 +4,7 @@
 # compile CXX with /Library/Developer/CommandLineTools/usr/bin/c++
 CXX_DEFINES = 
 
-CXX_INCLUDES = 
+CXX_INCLUDES = -I/Users/nilslyrevik/Desktop/Code/GitHubRepos/optimage/src -I/Users/nilslyrevik/Desktop/Code/GitHubRepos/optimage/tools/stb_image
 
 CXX_FLAGS = -std=gnu++17 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk -mmacosx-version-min=14.2
 

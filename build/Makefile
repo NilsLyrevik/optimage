@@ -153,6 +153,30 @@ main.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/optimage.dir/build.make CMakeFiles/optimage.dir/main.cpp.s
 .PHONY : main.cpp.s
 
+src/load_save_image.o: src/load_save_image.cpp.o
+.PHONY : src/load_save_image.o
+
+# target to build an object file
+src/load_save_image.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/optimage.dir/build.make CMakeFiles/optimage.dir/src/load_save_image.cpp.o
+.PHONY : src/load_save_image.cpp.o
+
+src/load_save_image.i: src/load_save_image.cpp.i
+.PHONY : src/load_save_image.i
+
+# target to preprocess a source file
+src/load_save_image.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/optimage.dir/build.make CMakeFiles/optimage.dir/src/load_save_image.cpp.i
+.PHONY : src/load_save_image.cpp.i
+
+src/load_save_image.s: src/load_save_image.cpp.s
+.PHONY : src/load_save_image.s
+
+# target to generate assembly for a file
+src/load_save_image.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/optimage.dir/build.make CMakeFiles/optimage.dir/src/load_save_image.cpp.s
+.PHONY : src/load_save_image.cpp.s
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -165,6 +189,9 @@ help:
 	@echo "... main.o"
 	@echo "... main.i"
 	@echo "... main.s"
+	@echo "... src/load_save_image.o"
+	@echo "... src/load_save_image.i"
+	@echo "... src/load_save_image.s"
 .PHONY : help
 
 
