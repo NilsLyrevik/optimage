@@ -16,7 +16,6 @@
 // stb forward declarations — no need to include implementations here
 // Include "stb_image.h" and "stb_image_write.h" in the .cpp file only.
 
-namespace optimage {
 
 /**
  * @brief Creates a directory if it does not already exist.
@@ -63,4 +62,3 @@ unsigned char* load_image(const std::string& filepath,
  */
 bool save_image(unsigned char* data, int width, int height, int channels);
 
-} // namespace optimage
