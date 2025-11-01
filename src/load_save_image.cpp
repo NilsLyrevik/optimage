@@ -78,7 +78,7 @@ unsigned char* load_image(const string& filepath, int& width, int& height, int& 
  * saves an image. uses some helpers to keep things tidy.
  */
 bool save_image(unsigned char* data, int width, int height, int channels) {
-    string output_dir = "output";
+    string output_dir = "../output";
     createdir(output_dir);
 
     string output_filepath = generate_output_filename(output_dir, ".jpg");
