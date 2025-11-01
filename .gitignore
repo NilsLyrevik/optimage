@@ -4,6 +4,12 @@ out/
 bin/
 obj/
 
+# Image directories
+/images/
+/big images
+/imported images
+/medium images
+
 # CMake generated files
 CMakeCache.txt
 CMakeFiles/
