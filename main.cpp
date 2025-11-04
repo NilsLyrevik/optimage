@@ -3,53 +3,69 @@
 
 // Personal includes
 #include "src/load_save_image.hpp"
+#include "src/image.hpp"
+#include "src/filters/blur.hpp"
 
 using namespace std;
 
 void print_help() {
-    cout << "Usage: <PATH TO INPUT IMAGE> <FLAG>\n\n"
+    cout << "Usage: optimage <PATH TO INPUT IMAGE> <FLAG>\n\n"
          << "Flags:\n"
-         << "  -h, --help  |  Show this help message\n"
-         << "  -s, --save  |  Only saves current PNG to a JPG with no modification\n";
+         << "  -h, --help            Show this help message\n"
+         << "  -s, --save            Only saves current image (no modification)\n"
+         << "  -cb, --circularblur   Apply circular median blur\n"
+         << "  -rb, --randomblur   Apply random blur (Nils edition v1)\n";
 }
 
 int main(int argc, char* argv[]) {
-    int width, height, channels;
-
     if (argc < 3) {
         cerr << "Usage: " << argv[0] << " <input_image> <flag>" << endl;
         return 1;
     }
 
+    string input_path = argv[1];
     string flag = argv[2];
+
     if (flag == "-h" || flag == "--help") {
         print_help();
         return 0;
     }
-    bool skipfilter = false;
-    if (flag == "-s" || flag == "--save"){
-      cout << "No filter choosen, only saving picture as JPG" << endl;
-      skipfilter = true;
-    }
 
-    unsigned char* data = load_image(argv[1], width, height, channels);
+    int width, height, channels;
+    unsigned char* data = load_image(input_path, width, height, channels);
     if (!data) {
-        cerr << "Failed to load image: " << argv[1] << endl;
+        cerr << "Failed to load image: " << input_path << endl;
         return 1;
     }
 
-    if (!skipfilter){
-      cout << "filter choosen : " << endl; // FIX THIS SO THAT IS SAYS WHICH FILTER IS CHOOSEN!!!!
+    Image img(data, width, height, channels);
+    Image output = img; // Default: same as input
 
-       // IMAGE PROCESSING LOGIC GOES HERE
-       
+    if (flag == "-s" || flag == "--save") {
+        cout << "No filter chosen, saving image as-is." << endl;
+    }
+    else if (flag == "-cb" || flag == "--circularblur") {
+        cout << "Applying circular median blur..." << endl;
+        output = circular_median_blur(img, 3); // You can tweak radius
+    }
+    else if (flag == "-rb" || flag == "--randomblur") {
+        cout << "Applying random blur... (Nils Edition v1)" << endl;
+        output = random_blur_v1(img);
+    }
+    else {
+        cerr << "Unknown flag: " << flag << endl;
+        print_help();
+        free(data);
+        return 1;
     }
 
-    if (!save_image(data, width, height, channels)) {
+    if (!save_image(output.data, output.width, output.height, output.channels, flag)) {
         cerr << "Error while saving image :/" << endl;
+        free(data);
         return 1;
     }
 
     cout << "Image saved successfully!" << endl;
+    free(data);
     return 0;
 }

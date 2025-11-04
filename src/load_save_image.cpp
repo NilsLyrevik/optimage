@@ -31,7 +31,7 @@ void createdir(const string& dir_name) {
 /*
  * function to keep the output file tidy and handle multiple saves if necessary.
  */
-string generate_output_filename(const string& output_dir, const string& extension = ".png") {
+string generate_output_filename(const string& output_dir, const string& flag ,const string& extension = ".jpg") {
     auto now = chrono::system_clock::now();
     time_t t = chrono::system_clock::to_time_t(now);
     tm local_tm{};
@@ -50,7 +50,7 @@ string generate_output_filename(const string& output_dir, const string& extensio
 
     int counter = 1;
     while (fs::exists(full_path)) {
-        filename = base_name + "_" + to_string(counter) + extension;
+        filename = base_name + "_" + to_string(counter) + "_" + flag + extension;
         full_path = output_dir + "/" + filename;
         counter++;
     }
@@ -77,11 +77,11 @@ unsigned char* load_image(const string& filepath, int& width, int& height, int& 
 /*
  * saves an image. uses some helpers to keep things tidy.
  */
-bool save_image(unsigned char* data, int width, int height, int channels) {
+bool save_image(unsigned char* data, int width, int height, int channels, const string& flag) {
     string output_dir = "../output";
     createdir(output_dir);
 
-    string output_filepath = generate_output_filename(output_dir, ".jpg");
+    string output_filepath = generate_output_filename(output_dir, flag ,".jpg");
 
     if (!stbi_write_jpg(output_filepath.c_str(), width, height, channels, data, 90)) {
         cerr << "Failed to save image at: " << output_filepath << endl;

@@ -13,6 +13,7 @@
 #include <string>
 #include <filesystem>
 
+
 // stb forward declarations — no need to include implementations here
 // Include "stb_image.h" and "stb_image_write.h" in the .cpp file only.
 
@@ -36,7 +37,9 @@ void createdir(const std::string& dir_name);
  * @return The full path to a unique filename.
  */
 std::string generate_output_filename(const std::string& output_dir,
-                                     const std::string& extension = ".png");
+    const std::string& flag,
+    const std::string& extension = ".jpg"
+);
 
 /**
  * @brief Loads an image from a file path using stb_image.
@@ -60,5 +63,5 @@ unsigned char* load_image(const std::string& filepath,
  * @param channels Number of color channels.
  * @return true if successful, false otherwise.
  */
-bool save_image(unsigned char* data, int width, int height, int channels);
+bool save_image(unsigned char* data, int width, int height, int channels, const std::string& flag);
 
