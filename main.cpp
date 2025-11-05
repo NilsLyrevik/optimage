@@ -14,7 +14,8 @@ void print_help() {
          << "  -h, --help            Show this help message\n"
          << "  -s, --save            Only saves current image (no modification)\n"
          << "  -cb, --circularblur   Apply circular median blur\n"
-         << "  -rb, --randomblur   Apply random blur (Nils edition v1)\n";
+         << "  -v1, --randomblur   Apply random blur (Nils edition v1)\n"
+         << "  -v2, --colormblur   Apply a color median blur (Nils edition v2)\n";
 }
 
 int main(int argc, char* argv[]) {
@@ -48,9 +49,13 @@ int main(int argc, char* argv[]) {
         cout << "Applying circular median blur..." << endl;
         output = circular_median_blur(img, 3); // You can tweak radius
     }
-    else if (flag == "-rb" || flag == "--randomblur") {
+    else if (flag == "-v1" || flag == "--randomblur") {
         cout << "Applying random blur... (Nils Edition v1)" << endl;
         output = random_blur_v1(img);
+    }
+    else if (flag == "-v2" || flag == "--colormblur") {
+        cout << "Applying random blur... (Nils Edition v2)" << endl;
+        output = color_median_blur(img,5);
     }
     else {
         cerr << "Unknown flag: " << flag << endl;

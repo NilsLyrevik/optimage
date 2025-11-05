@@ -10,6 +10,9 @@ obj/
 /imported images
 /medium images
 
+# output directory
+/output/
+
 # CMake generated files
 CMakeCache.txt
 CMakeFiles/

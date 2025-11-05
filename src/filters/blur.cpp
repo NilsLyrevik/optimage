@@ -63,12 +63,16 @@ Image circular_median_blur(const Image& img, int radius) {
 
     return Image(blurred_data, img.width, img.height, img.channels);
 }
+
+
 // Maybe this one can be more eficient in some way?
 int clamp(int low, int high, int num){
     if (num < low) return low;
     if (num > high) return high;
     return num;
 }
+
+
 
 Image random_blur_v1(const Image& img){
     std::random_device rd;
@@ -93,6 +97,57 @@ Image random_blur_v1(const Image& img){
 
             if (img.channels == 4)
                 blurred_data[idx + 3] = img.data[rand_idx + 3]; 
+        }
+    }
+
+    return Image(blurred_data, img.width, img.height, img.channels);
+}
+
+Image color_median_blur(const Image& img, int dimension){
+
+    unsigned char* blurred_data = (unsigned char*)malloc(img.width * img.height * img.channels);
+    int vector_size = dimension * dimension;
+    for (int y = 0; y < img.height; ++y){
+        for (int x = 0; x < img.width; ++x){
+
+            unsigned char red[vector_size];
+            unsigned char green[vector_size];
+            unsigned char blue[vector_size];
+
+            int idx = (y * img.width + x) * img.channels;
+            int index = 0;
+            for (int dy = y - (dimension / 2); dy <= y + (dimension / 2) ; ++dy){
+                for (int dx = x - (dimension / 2); dx <= x + (dimension / 2) ; ++dx){
+                    //clamp y
+                    int temp_dy = clamp(0,img.height - 1,dy);
+                    //clamp x
+                    int temp_dx = clamp(0,img.width - 1,dx);
+
+                    int d_idx = (temp_dy * img.width + temp_dx) * img.channels;
+                    red[index] = img.data[d_idx];
+                    green[index] = img.data[d_idx + 1];
+                    blue[index] = img.data[d_idx + 2];
+                    ++index;
+                }
+            }
+            int red_i = 0,green_i = 0,blue_i = 0;
+
+            for (int i = 0; i < vector_size; ++i){
+                red_i += (int)red[i];
+                green_i += (int)green[i];
+                blue_i += (int)blue[i];
+            }
+            
+            red_i = red_i/vector_size;
+            green_i = green_i/vector_size;
+            blue_i = blue_i/vector_size;
+
+            blurred_data[idx]     = clamp(0,255,red_i); 
+            blurred_data[idx + 1] = clamp(0,255,green_i); 
+            blurred_data[idx + 2] = clamp(0,255,blue_i); 
+
+            if (img.channels == 4)
+                blurred_data[idx + 3] = img.data[idx + 3]; 
         }
     }
 

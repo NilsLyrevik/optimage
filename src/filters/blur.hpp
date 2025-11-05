@@ -5,5 +5,6 @@
 
 Image circular_median_blur(const Image& img, int radius);
 Image random_blur_v1(const Image& img);
+Image color_median_blur(const Image& img, int dimension);
 
 #endif
