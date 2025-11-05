@@ -66,14 +66,27 @@ Image circular_median_blur(const Image& img, int radius) {
 
 
 // Maybe this one can be more eficient in some way?
+/*
 int clamp(int low, int high, int num){
     if (num < low) return low;
     if (num > high) return high;
     return num;
 }
 
+*/
+//Branchless version (maybe faster in clock cycles but old version above still very fast)
+int clamp(int low, int high, int num){
+    return (num < low) ? low : (num > high) ? high : num;
+}
 
+/*
+Why it's fast.
+    -> each pixel only visited once
+    -> no temporary buffers. we malloc once!
 
+Possible improvements:
+    -> Make it parallel.
+*/
 Image random_blur_v1(const Image& img){
     std::random_device rd;
     std::mt19937 gen(rd());
@@ -103,7 +116,7 @@ Image random_blur_v1(const Image& img){
     return Image(blurred_data, img.width, img.height, img.channels);
 }
 
-Image color_median_blur(const Image& img, int dimension){
+Image color_average_blur(const Image& img, int dimension){
 
     unsigned char* blurred_data = (unsigned char*)malloc(img.width * img.height * img.channels);
     int vector_size = dimension * dimension;
@@ -137,7 +150,7 @@ Image color_median_blur(const Image& img, int dimension){
                 green_i += (int)green[i];
                 blue_i += (int)blue[i];
             }
-            
+
             red_i = red_i/vector_size;
             green_i = green_i/vector_size;
             blue_i = blue_i/vector_size;

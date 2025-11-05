@@ -5,17 +5,19 @@
 #include "src/load_save_image.hpp"
 #include "src/image.hpp"
 #include "src/filters/blur.hpp"
+#include "src/filters/color.hpp"
 
 using namespace std;
 
 void print_help() {
     cout << "Usage: optimage <PATH TO INPUT IMAGE> <FLAG>\n\n"
          << "Flags:\n"
-         << "  -h, --help            Show this help message\n"
-         << "  -s, --save            Only saves current image (no modification)\n"
-         << "  -cb, --circularblur   Apply circular median blur\n"
-         << "  -v1, --randomblur   Apply random blur (Nils edition v1)\n"
-         << "  -v2, --colormblur   Apply a color median blur (Nils edition v2)\n";
+         << "  -h, --help              Show this help message\n"
+         << "  -s, --save              Only saves current image (no modification)\n"
+         << "  -cb, --circularblur     Apply circular median blur\n"
+         << "  -v1, --randomblur       Apply random blur (Nils edition v1)\n"
+         << "  -v2, --colormblur       Apply a color average blur (Nils edition v2)\n"
+         << "  -se, --sepia            Apply a sepia (warmer color filter)\n";
 }
 
 int main(int argc, char* argv[]) {
@@ -54,8 +56,12 @@ int main(int argc, char* argv[]) {
         output = random_blur_v1(img);
     }
     else if (flag == "-v2" || flag == "--colormblur") {
-        cout << "Applying random blur... (Nils Edition v2)" << endl;
-        output = color_median_blur(img,5);
+        cout << "Applying avrage_blur blur... (Nils Edition v2)" << endl;
+        output = color_average_blur(img,5);
+    }
+    else if (flag == "-se" || flag == "--sepia") {
+        cout << "Applying sepia color filter... " << endl;
+        output = Sepia(img);
     }
     else {
         cerr << "Unknown flag: " << flag << endl;
