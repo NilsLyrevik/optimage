@@ -4,5 +4,6 @@
 #include "../image.hpp"
 
 Image Sepia(Image& img);
+Image natural_gray(Image& img);
 
 #endif

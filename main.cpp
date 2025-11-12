@@ -17,6 +17,7 @@ void print_help() {
          << "  -cb, --circularblur     Apply circular median blur\n"
          << "  -v1, --randomblur       Apply random blur (Nils edition v1)\n"
          << "  -v2, --colormblur       Apply a color average blur (Nils edition v2)\n"
+         << "  -ng, --naturalgray      Apply a natural grayscale filter \n"
          << "  -se, --sepia            Apply a sepia (warmer color filter)\n";
 }
 
@@ -62,6 +63,10 @@ int main(int argc, char* argv[]) {
     else if (flag == "-se" || flag == "--sepia") {
         cout << "Applying sepia color filter... " << endl;
         output = Sepia(img);
+    }
+    else if (flag == "-ng" || flag == "--naturalgray") {
+        cout << "Applying sepia color filter... " << endl;
+        output = natural_gray(img);
     }
     else {
         cerr << "Unknown flag: " << flag << endl;

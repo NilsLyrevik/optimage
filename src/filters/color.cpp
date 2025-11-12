@@ -34,3 +34,28 @@ Image Sepia(Image& img){
     }
     return Image(colored_data, img.width, img.height, img.channels);
 }
+
+/*
+Implemnted using ointer arithemitic!!!
+
+Alot cooler and shorter code. however a little bit less readble.
+*/
+Image natural_gray(Image& img){
+    unsigned char* gray_data = (unsigned char*)malloc(img.width * img.height * img.channels);
+    unsigned char* src = img.data;
+    unsigned char* dst = gray_data;
+    int pixels = img.width * img.height;
+
+    for (int i = 0; i < pixels; ++i) {
+        float gray = src[0]*0.2126f + src[1]*0.7152f + src[2]*0.0722f;
+        unsigned char g = (unsigned char)gray;
+
+        dst[0] = dst[1] = dst[2] = g;
+        if (img.channels == 4)
+            dst[3] = src[3];
+
+        src += img.channels; // move to next pixel
+        dst += img.channels;
+    }
+    return Image(gray_data, img.width, img.height, img.channels);
+}
