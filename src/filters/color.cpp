@@ -59,3 +59,48 @@ Image natural_gray(Image& img){
     }
     return Image(gray_data, img.width, img.height, img.channels);
 }
+
+Image hue_shift(Image& img, float angle){
+    unsigned char* hue_data = (unsigned char*)malloc(img.width * img.height * img.channels);
+    unsigned char* src = img.data;
+    unsigned char* dst = hue_data;
+    int pixels = img.width * img.height;
+
+
+    // angle math
+    // angle in radians
+    float cosA = cosf(angle);
+    float sinA = sinf(angle);
+    float sqrt3 = 1.7320508f;
+    float matrix[3][3] = {
+        { cosA + (1.0f - cosA) / 3.0f,
+        1.0f/3.0f*(1.0f - cosA) - 1.0f/sqrt3*sinA,
+        1.0f/3.0f*(1.0f - cosA) + 1.0f/sqrt3*sinA },
+
+        { 1.0f/3.0f*(1.0f - cosA) + 1.0f/sqrt3*sinA,
+        cosA + 1.0f/3.0f*(1.0f - cosA),
+        1.0f/3.0f*(1.0f - cosA) - 1.0f/sqrt3*sinA },
+
+        { 1.0f/3.0f*(1.0f - cosA) - 1.0f/sqrt3*sinA,
+        1.0f/3.0f*(1.0f - cosA) + 1.0f/sqrt3*sinA,
+        cosA + 1.0f/3.0f*(1.0f - cosA) }
+    };
+
+    for (int i = 0; i < pixels; ++i) {
+        float r = (float)src[0];
+        float g = (float)src[1];
+        float b = (float)src[2];
+
+        float r2 = r*matrix[0][0] + g*matrix[0][1] + b*matrix[0][2];
+        float g2 = r*matrix[1][0] + g*matrix[1][1] + b*matrix[1][2];
+        float b2 = r*matrix[2][0] + g*matrix[2][1] + b*matrix[2][2];
+
+        dst[0] = (unsigned char)fminf(fmaxf(r2, 0.0f), 255.0f);
+        dst[1] = (unsigned char)fminf(fmaxf(g2, 0.0f), 255.0f);
+        dst[2] = (unsigned char)fminf(fmaxf(b2, 0.0f), 255.0f);
+        
+        src += img.channels;
+        dst += img.channels;
+    }
+    return Image(hue_data, img.width, img.height, img.channels);
+}

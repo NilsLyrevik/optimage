@@ -18,7 +18,8 @@ void print_help() {
          << "  -v1, --randomblur       Apply random blur (Nils edition v1)\n"
          << "  -v2, --colormblur       Apply a color average blur (Nils edition v2)\n"
          << "  -ng, --naturalgray      Apply a natural grayscale filter \n"
-         << "  -se, --sepia            Apply a sepia (warmer color filter)\n";
+         << "  -se, --sepia            Apply a sepia (warmer color filter)\n"
+         << "  -hs, --hueshift         Apply a hueshift (standard angle = 1 radian)\n";
 }
 
 int main(int argc, char* argv[]) {
@@ -67,6 +68,10 @@ int main(int argc, char* argv[]) {
     else if (flag == "-ng" || flag == "--naturalgray") {
         cout << "Applying sepia color filter... " << endl;
         output = natural_gray(img);
+    }
+    else if (flag == "-hs" || flag == "--hueshift") {
+        cout << "Applying sepia color filter... " << endl;
+        output = hue_shift(img,2);
     }
     else {
         cerr << "Unknown flag: " << flag << endl;

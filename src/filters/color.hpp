@@ -5,5 +5,6 @@
 
 Image Sepia(Image& img);
 Image natural_gray(Image& img);
+Image hue_shift(Image& img,float angle);
 
 #endif
